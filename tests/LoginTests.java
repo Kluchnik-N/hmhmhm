@@ -24,16 +24,21 @@ public class LoginTests extends BaseTest {
         Assert.assertEquals(inventoryPage.getTitle(), "Products");
     }
 
-    @Test(description = "Locked out user should see error message")
+    /*
+     * Описание: Проверка реакции системы на ввод данных заблокированного пользователя.
+     */
+    @Test(description = "Контроль блокировки учетной записи (согласно ТЗ)")
     @Story("Locked Out User")
-    @Description("Verify that locked out user sees appropriate error message")
+    @Description("Проверка вывода информационного сообщения об ошибке доступа согласно спецификации.")
     @Severity(SeverityLevel.NORMAL)
     public void lockedOutUserSeesError() {
         LoginPage loginPage = new LoginPage(driver).open();
+
         loginPage.loginAs("locked_out_user", "secret_sauce");
 
         String error = loginPage.getErrorMessage();
-        Assert.assertTrue(error.toLowerCase().contains("locked out"), "Expected locked out error message");
+
+        Assert.assertTrue(error.toLowerCase().contains("locked out"), "Критическая ошибка: Сообщение не соответствует утвержденному тексту");
     }
 
     @Test(description = "Invalid credentials should show error")
@@ -60,5 +65,3 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(error.toLowerCase().contains("username is required"), "Expected username required message");
     }
 }
-
-
